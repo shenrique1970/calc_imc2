@@ -10,9 +10,10 @@ interface HistoricoEntry {
 
 interface IMCHistoryProps {
   initialHistorico: HistoricoEntry[];
+  onDelete: (index: number) => void; // Nova propriedade para a função de apagar
 }
 
-export default function IMCHistory({ initialHistorico }: IMCHistoryProps) {
+const IMCHistory: React.FC<IMCHistoryProps> = ({ initialHistorico, onDelete }) => {
   return (
     <div className="flex flex-col items-center border-black">
       <table className="table border-collapse border border-black w-1/2">
@@ -23,6 +24,7 @@ export default function IMCHistory({ initialHistorico }: IMCHistoryProps) {
             <th className="table-cell border border-black p-3 w-24">Altura</th>
             <th className="table-cell border border-black p-3 w-24">IMC</th>
             <th className="table-cell border border-black p-3 w-24">Data</th>
+            <th className="table-cell border border-black p-3 w-24">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -33,10 +35,15 @@ export default function IMCHistory({ initialHistorico }: IMCHistoryProps) {
               <td className="table-cell border text-center border-black">{entrada.altura}</td>
               <td className="table-cell border text-center border-black">{entrada.imc.toFixed(2)}</td>
               <td className="table-cell border text-center border-black">{entrada.data}</td>
+              <td className="table-cell border text-center border-black">
+                <button onClick={() => onDelete(index)}>Apagar</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
-}
+};
+
+export default IMCHistory;

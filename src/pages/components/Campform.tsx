@@ -12,3 +12,4 @@ export default function Compform(props:CampformProps) {
         </div>
     )
 }
+

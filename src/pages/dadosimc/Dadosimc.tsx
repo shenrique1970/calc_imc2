@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import IMCForm from '../imcform/IMCForm';
 import IMCHistory from '../imchistory/IMCHistory';
 
-
 export default function Dadosimc() {
   const [peso, setPeso] = useState<number>(0);
   const [altura, setAltura] = useState<number>(0);
@@ -12,8 +11,6 @@ export default function Dadosimc() {
 
   const router = useRouter();
   const { p_peso, p_altura, p_imc } = router.query;
-
-  
 
   useEffect(() => {
     if (p_peso && p_altura && p_imc) {
@@ -43,10 +40,16 @@ export default function Dadosimc() {
     localStorage.setItem('historicoIMC', JSON.stringify(novoHistorico));
   };
 
+  const apagarRegistro = (index: number) => {
+    const novoHistorico = historico.filter((_, i) => i !== index);
+    setHistorico(novoHistorico);
+    localStorage.setItem('historicoIMC', JSON.stringify(novoHistorico));
+  };
+
   return (
     <div>
       <IMCForm onSubmit={gravarHistorico} />
-      <IMCHistory initialHistorico={historico} />
+      <IMCHistory initialHistorico={historico} onDelete={apagarRegistro} />
     </div>
   );
 }
